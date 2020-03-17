@@ -2,22 +2,27 @@
 #define LINO_BASE_CONFIG_H
 
 //uncomment the base you're building
-#define LINO_BASE DIFFERENTIAL_DRIVE // 2WD and Tracked robot w/ 2 motors
-// #define LINO_BASE SKID_STEER      // 4WD robot
+// #define LINO_BASE DIFFERENTIAL_DRIVE // 2WD and Tracked robot w/ 2 motors
+#define LINO_BASE SKID_STEER      // 4WD robot
 // #define LINO_BASE ACKERMANN       // Car-like steering robot w/ 2 motors
 // #define LINO_BASE ACKERMANN1      // Car-like steering robot w/ 1 motor
 // #define LINO_BASE MECANUM         // Mecanum drive robot
 
 //uncomment the motor driver you're using
-#define USE_L298_DRIVER
+// #define USE_L298_DRIVER
 // #define USE_BTS7960_DRIVER
 // #define USE_ESC
+#define USE_Raspi_MotorHAT
 
 //uncomment the IMU you're using
-#define USE_GY85_IMU
-// #define USE_MPU6050_IMU
+// #define USE_GY85_IMU
+#define USE_MPU6050_IMU
 // #define USE_MPU9150_IMU
 // #define USE_MPU9250_IMU
+
+//uncomment the Encoder you're using
+#define USE_ENCODER_HC-89
+// #define USE_ENCODER_DEFAULT
 
 #define DEBUG 1
 
@@ -57,17 +62,17 @@ ROBOT ORIENTATION
 */
 
 /// ENCODER PINS
-#define MOTOR1_ENCODER_A 15
-#define MOTOR1_ENCODER_B 14 
+define MOTOR1_ENCODER_A 2
+#define MOTOR1_ENCODER_B 0 
 
-#define MOTOR2_ENCODER_A 11
-#define MOTOR2_ENCODER_B 12 
+define MOTOR2_ENCODER_A 7
+#define MOTOR2_ENCODER_B 0
 
-#define MOTOR3_ENCODER_A 17
-#define MOTOR3_ENCODER_B 16 
+#define MOTOR3_ENCODER_A 0
+#define MOTOR3_ENCODER_B 0 
 
-#define MOTOR4_ENCODER_A 9
-#define MOTOR4_ENCODER_B 10
+#define MOTOR4_ENCODER_A 0
+#define MOTOR4_ENCODER_B 0
 
 //MOTOR PINS
 #ifdef USE_L298_DRIVER
@@ -137,6 +142,8 @@ ROBOT ORIENTATION
 
   #define PWM_MAX 400
   #define PWM_MIN -PWM_MAX
+#endif
+#ifdef USE_Raspi_MotorHAT
 #endif
 
 #define STEERING_PIN 7
