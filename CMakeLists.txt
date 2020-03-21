@@ -13,7 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
     roscpp 
     rospy 
     tf2
-		tf2_ros
+    tf2_ros
     nav_msgs 
     lino_msgs 
     geometry_msgs 
@@ -32,6 +32,7 @@ catkin_package(
 ## Build ##
 ###########
 
+include_directories(${catkin_INCLUDE_DIRS})
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
