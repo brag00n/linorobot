@@ -9,7 +9,7 @@
 #include <sensor_msgs/Range.h>
 #include <tf/transform_broadcaster.h>
 
-#include "lino_base_config.h"
+//#include "lino_base_config.h"
 
 //#include "lino_msgs/Imu.h"  // IMU
 //#include "Imu.h"            // IMU
@@ -22,6 +22,8 @@ tf::TransformBroadcaster broadcaster;
 // >>>>>> ULTRASOUND configuration
 sensor_msgs::Range range_msg;
 ros::Publisher pub_range( "/ultrasound", &range_msg);
+#define COMMAND_RATE 20 //hz
+#define DEBUG_RATE 5
 // <<<<<< ULTRASOUND configuration
 
 // >>>>>> IMU configuration
@@ -30,13 +32,6 @@ ros::Publisher pub_range( "/ultrasound", &range_msg);
 //ros::Publisher raw_imu_pub("/raw_imu", &raw_imu_msg);
 //static bool imu_is_initialized=false; 
 // <<<<<< IMU configuration
-
-
-#define COMMAND_RATE 20 //hz
-//#define DEBUG_RATE 5
-
-
-const int adc_pin = 0;
 
 float getRange_Ultrasound(int pPinTrig, int pPinEcho){
   pinMode(pPinTrig, OUTPUT); // Sets the trigPin as an Output
@@ -66,31 +61,36 @@ float getRange_Ultrasound(int pPinTrig, int pPinEcho){
 void setup()
 {
   nh.initNode();
-  nh.advertise(pub_range);
+
+  // IMU init
   //nh.advertise(raw_imu_pub);
+
+  // TF init (Transform) coordinate frames
   broadcaster.init(nh);
-  
-    t.header.frame_id = "ultrasound";
-    t.transform.translation.x = 1.0;
-    t.transform.rotation.x = 0.0;
-    t.transform.rotation.y = 0.0;
-    t.transform.rotation.z = 0.0;
-    t.transform.rotation.w = 1.0;
-    t.header.stamp = nh.now();
+  t.header.frame_id = "ultrasound";
+  t.transform.translation.x = 1.0;
+  t.transform.rotation.x = 0.0;
+  t.transform.rotation.y = 0.0;
+  t.transform.rotation.z = 0.0;
+  t.transform.rotation.w = 1.0;
 
-    t.child_frame_id = "ultrasound_FR";
-    t.transform.rotation.y = 0.0;
-    broadcaster.sendTransform(t);
+  // Coordinates for Ultrasound front Right
+  t.child_frame_id = "ultrasound_FR";
+  t.transform.rotation.y = 0.0;
+  broadcaster.sendTransform(t);
 
-    t.child_frame_id = "ultrasound_FC";
-    t.transform.rotation.y = 0.5;
-    broadcaster.sendTransform(t);
+  // Coordinates for Ultrasound front Center
+  t.child_frame_id = "ultrasound_FC";
+  t.transform.rotation.y = 0.5;
+  broadcaster.sendTransform(t);
 
-    t.child_frame_id = "ultrasound_FL";
-    t.transform.rotation.y = 1.0;
-    broadcaster.sendTransform(t);
+  // Coordinates for Ultrasound front left
+  t.child_frame_id = "ultrasound_FL";
+  t.transform.rotation.y = 1.0;
+  broadcaster.sendTransform(t);
 
-  // HC_SR04 config 
+  // Ultrasound Init 
+  nh.advertise(pub_range);
   range_msg.radiation_type = sensor_msgs::Range::ULTRASOUND;
   range_msg.field_of_view = 0.5235987756;  //  in Radian (=30°)
   range_msg.min_range = 0.002; // min (in meter): 2cm
@@ -120,12 +120,6 @@ void loop()
      isJustConnected=false;
   }
 
-  nh.logdebug("Debug Statement");
-  nh.loginfo("Program info");
-  nh.logwarn("Warnings.");
-  nh.logerror("Errors..");
-  nh.logfatal("Fatalities!");
-
   //publish the adc value every 50 milliseconds (20hz)
   //since it takes that long for the sensor to stablize
   if ( millis() >= range_time ){
@@ -134,19 +128,19 @@ void loop()
     range_msg.header.frame_id =  "ultrasound_FL";
     range_msg.header.stamp = nh.now();
     pub_range.publish(&range_msg);
-    //nh.logdebug("Ultrasound FL publiched");
+    //nh.logdebug("Ultrasound FL published");
 
     range_msg.range = getRange_Ultrasound(4,5);
     range_msg.header.frame_id =  "ultrasound_FC";
     range_msg.header.stamp = nh.now();
     pub_range.publish(&range_msg);
-    //nh.logdebug("Ultrasound FC publiched");
+    //nh.logdebug("Ultrasound FC published");
 
     range_msg.range = getRange_Ultrasound(8,9);
     range_msg.header.frame_id =  "ultrasound_FR";
     range_msg.header.stamp = nh.now();
     pub_range.publish(&range_msg);
-    //nh.logdebug("Ultrasound FR publiched");
+    //nh.logdebug("Ultrasound FR published");
 
     range_time =  millis() + 50;
   }
