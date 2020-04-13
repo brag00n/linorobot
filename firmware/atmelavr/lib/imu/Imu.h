@@ -1,11 +1,11 @@
 #ifndef _IMU2_H_
 #define _IMU2_H_
 
-#include "I2Cdev.h"
+#include <I2Cdev.h>
 #include "imu_config.h"
 
 #include <Wire.h>
-#include "geometry_msgs/Vector3.h"
+#include <geometry_msgs/Vector3.h>
 
 bool initIMU()
 {
