@@ -1,0 +1,30 @@
+{
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: riscv64-unknown-elf-gcc.exe build active file",
+            "command": "C:/Users/OLIVIERCousinier/.platformio/packages/toolchain-kendryte210/bin/riscv64-unknown-elf-gcc.exe",
+            "args": [
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "-mcmodel=medany",
+                "-mabi=lp64f",
+                "-march=rv64imafc"
+            ],
+            "options": {
+                "cwd": "C:/Users/OLIVIERCousinier/.platformio/packages/toolchain-kendryte210/bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Generated task by Debugger"
+        }
+    ],
+    "version": "2.0.0"
+}
