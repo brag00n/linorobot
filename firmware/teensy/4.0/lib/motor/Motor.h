@@ -3,13 +3,18 @@
 
 #include <Servo.h> 
 #include <Arduino.h>
+#include "Raspi_MotorHAT.h"
+#include "ArduinoLog.h"
 
-class Controller
+class Motor
 {
     public:
-        enum driver {L298, BTS7960, ESC};
-        Controller(driver motor_driver, int pwm_pin, int motor_pinA, int motor_pinB);
-        void spin(int pwm);
+        enum driver {L298, BTS7960, ESC,RASPIMOTORHAT};
+        Motor(driver motor_driver, int pwm_pin, int motor_pinA, int motor_pinB, int minPwm, int maxPwm);
+        bool initialize();
+        bool spin(int pwm);
+        bool isConnected();
+        bool isConnected(uint8_t address);
 
     private:
         Servo motor_;
@@ -17,6 +22,8 @@ class Controller
         int pwm_pin_;
         int motor_pinA_;
         int motor_pinB_;
+        int motor_minPwm_;
+        int motor_maxPwm_;
 };
 
 #endif

@@ -1,6 +1,6 @@
 // interrupt pins for known boards
 
-// Teensy (and maybe others) define these automatically
+// Teensy (and maybe others) define these automatically 
 #if !defined(CORE_NUM_INTERRUPT)
 
 // Wiring boards
@@ -277,7 +277,7 @@
   #define CORE_INT11_PIN	11
   #define CORE_INT12_PIN	12
   #define CORE_INT13_PIN	13
-
+     
 #endif
 #endif
 

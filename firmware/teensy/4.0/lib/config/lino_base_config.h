@@ -1,37 +1,52 @@
 #ifndef LINO_BASE_CONFIG_H
 #define LINO_BASE_CONFIG_H
-
+               
 //uncomment the base you're building
-// #define LINO_BASE DIFFERENTIAL_DRIVE // 2WD and Tracked robot w/ 2 motors
-#define LINO_BASE SKID_STEER      // 4WD robot
+ #define LINO_BASE DIFFERENTIAL_DRIVE // 2WD and Tracked robot w/ 2 motors
+// #define LINO_BASE SKID_STEER      // 4WD robot
 // #define LINO_BASE ACKERMANN       // Car-like steering robot w/ 2 motors
 // #define LINO_BASE ACKERMANN1      // Car-like steering robot w/ 1 motor
 // #define LINO_BASE MECANUM         // Mecanum drive robot
 
 //uncomment the motor driver you're using
-#define USE_L298_DRIVER
+//#define USE_L298_DRIVER
 // #define USE_BTS7960_DRIVER
+#define USE_RASPIMOTORHAT_DRIVER
 // #define USE_ESC
 
 //uncomment the IMU you're using
-//#define USE_GY85_IMU
+// #define USE_GY85_IMU
 #define USE_MPU6050_IMU
 // #define USE_MPU9150_IMU
 // #define USE_MPU9250_IMU
 
+//uncomment the Encoder you're using
+//#define USE_ENCODER_HC89
+#define USE_ENCODER_DEFAULT
+
 #define DEBUG 1
 
-#define K_P 0.6 // P constant
-#define K_I 0.3 // I constant
-#define K_D 0.5 // D constant
+//#define K_P 0.6 // P constant
+//#define K_I 0.3 // I constant
+//#define K_D 0.5 // D constant
+
+/*
+#define K_P 0.2 // P constant
+#define K_I 0.0 // I constant
+#define K_D 0.0 // D constant
+*/
+#define K_P 0.01 // P constant
+#define K_I 0.005 // I constant
+#define K_D 0.0000025 // D constant
+
 
 //define your robot' specs here
-#define MAX_RPM 330               // motor's maximum RPM
-#define COUNTS_PER_REV 1550       // wheel encoder's no of ticks per rev
-#define WHEEL_DIAMETER 0.10       // wheel's diameter in meters
+#define MAX_RPM 1000               // motor's maximum RPM
+#define COUNTS_PER_REV 12         // wheel encoder's no of ticks per rev
+#define WHEEL_DIAMETER 0.065       // wheel's diameter in meters
 #define PWM_BITS 8                // PWM Resolution of the microcontroller
-#define LR_WHEELS_DISTANCE 0.235  // distance between left and right wheels
-#define FR_WHEELS_DISTANCE 0.30   // distance between front and rear wheels. Ignore this if you're on 2WD/ACKERMANN
+#define LR_WHEELS_DISTANCE 0.135  // distance between left and right wheels
+#define FR_WHEELS_DISTANCE 0.11   // distance between front and rear wheels. Ignore this if you're on 2WD/ACKERMANN
 #define MAX_STEERING_ANGLE 0.415  // max steering angle. This only applies to Ackermann steering
 
 //=================BIGGER ROBOT SPEC (BTS7960)=============================
@@ -57,17 +72,17 @@ ROBOT ORIENTATION
 */
 
 /// ENCODER PINS
-#define MOTOR1_ENCODER_A 2
-#define MOTOR1_ENCODER_B 14 
+#define MOTOR1_ENCODER_A 20
+#define MOTOR1_ENCODER_B 21
 
-#define MOTOR2_ENCODER_A 11
-#define MOTOR2_ENCODER_B 12 
+#define MOTOR2_ENCODER_A 2
+#define MOTOR2_ENCODER_B 3 
 
-#define MOTOR3_ENCODER_A 17
-#define MOTOR3_ENCODER_B 16 
+#define MOTOR3_ENCODER_A 22
+#define MOTOR3_ENCODER_B 0 
 
-#define MOTOR4_ENCODER_A 9
-#define MOTOR4_ENCODER_B 10
+#define MOTOR4_ENCODER_A 8
+#define MOTOR4_ENCODER_B 0
 
 //MOTOR PINS
 #ifdef USE_L298_DRIVER
@@ -137,6 +152,30 @@ ROBOT ORIENTATION
 
   #define PWM_MAX 400
   #define PWM_MIN -PWM_MAX
+#endif
+
+#ifdef USE_RASPIMOTORHAT_DRIVER
+  #define MOTOR_DRIVER RASPIMOTORHAT  
+
+  #define MOTOR1_PWM 1 //DON'T TOUCH THIS! This is just a placeholder
+  #define MOTOR1_IN_A 10
+  #define MOTOR1_IN_B -1
+
+  #define MOTOR2_PWM 8 //DON'T TOUCH THIS! This is just a placeholder
+  #define MOTOR2_IN_A 11
+  #define MOTOR2_IN_B -1
+
+  #define MOTOR3_PWM 0 //DON'T TOUCH THIS! This is just a placeholder
+  #define MOTOR3_IN_A 12
+  #define MOTOR3_IN_B -1
+
+  #define MOTOR4_PWM 2 //DON'T TOUCH THIS! This is just a placeholder
+  #define MOTOR4_IN_A 13
+  #define MOTOR4_IN_B -1
+
+  #define PWM_MAX 255
+  #define PWM_MIN 80
+  #define PWM_BITS 8                // PWM Resolution of the microcontroller (8 => 0-255)
 #endif
 
 #define STEERING_PIN 7
