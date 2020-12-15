@@ -10,25 +10,22 @@ Linorobot is a suite of Open Source ROS compatible robots that aims to provide s
 You can read the full tutorial how to build your robot [here](https://github.com/grassjelly/linorobot/wiki/1.-Getting-Started).
 
 ## Bamboo Platform
+
 types of robot base: 4WD
-
-![alt text](https://github.com/linorobot/lino_docs/blob/master/imgs/readme/family.png?raw=true)
-
-Works on:
-- ROS Kinetic (Ubuntu 16.04)
+Works on Dockerized ROS Kinetic (Ubuntu 16.04)
 
 ## Hardware
 
 #### Main ARM dev boards:    
-- Raspberry Pi 3/B+ (Using ROS sustem, Manage sub-system Nodes and YDLIDAR X4)
+- Raspberry Pi 3/B+ (Using Dockerized ROS system for managing sub-system Nodes and YDLIDAR X4)
 
 #### Sub-system boards: 
- * Node01: Teensy 4.0 (Motion node: Odometry HC-89, Motor driver [Raspery MotorHat sku:418460](https://raspberrypiwiki.com/index.php/Robot_Expansion_Board))
- * Node02: GrovePi+   (Sensors node: Ultrasound HC-SR40; IMU MPU6050)
- * Node03: M5StickV   (Camera node: Camera; IMU)
+ * ROS Serial Node01: Motion node (Board Teensy 4.0 managing Odometry HC-89 and Motor driver [Raspery MotorHat sku:418460](https://raspberrypiwiki.com/index.php/Robot_Expansion_Board))
+ * ROS Serial Node02: Sensors node (Board GrovePi+ managing Ultrasound HC-SR40 and IMU MPU6050)
+ * ROS Serial Node03: Camera node (Board M5StickV managing Camera and IMU)
 
 ## Firmware
-Configurable subsystems.
- * Node01 (Motion node) : linorobot_ws/firmware/node01/lib/config/lino_base_config.h
- * Node02 (Sensor node) : linorobot_ws/firmware/node02/lib/config/lino_base_config.h
- * Node03 (Camera node) : linorobot_ws/firmware/node03/lib/config/lino_base_config.h
+Configurable sub-systems.
+ * Node01 (Motion node) : linorobot_ws/firmware/rosserial01/lib/config/lino_base_config.h
+ * Node02 (Sensor node) : linorobot_ws/firmware/rosserial02/lib/config/lino_base_config.h
+ * Node03 (Camera node) : linorobot_ws/firmware/rosserial03/lib/config/lino_base_config.h
